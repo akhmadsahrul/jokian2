@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+<div class="login-container">
+  <form class="login-card" onsubmit="return login(event)">
+    
+    <h2>Member Login</h2>
+
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+
+    <button type="submit">LOGIN</button>
+
+    <div class="links">
+      <a href="#" data-bs-toggle="modal" data-bs-target="#forgotModal">Lupa Password</a>
+      <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Daftar</a>
+    </div>
+
+  </form>
+</div>
+
+<!-- MODAL LUPA PASSWORD -->
+<div class="modal fade" id="forgotModal">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <h5>Lupa Password</h5>
+      <input type="email" class="form-control mt-2" placeholder="Masukkan Email">
+      <button class="btn btn-primary mt-3">Kirim</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DAFTAR -->
+<div class="modal fade" id="registerModal">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <h5>Daftar Akun</h5>
+      <input type="text" class="form-control mt-2" placeholder="Nama">
+      <input type="email" class="form-control mt-2" placeholder="Email">
+      <input type="password" class="form-control mt-2" placeholder="Password">
+      <button class="btn btn-success mt-3">Daftar</button>
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="js/datapengguna.js"></script>
+<script src="js/index.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tracking DO</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <style>
+        body {
+            background: #f4f6f9;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <!-- TOPBAR -->
+        <div class="topbar d-md-none">
+
+            <button @click="toggleSidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <h5>SITTA</h5>
+
+        </div>
+
+        <!-- OVERLAY -->
+        <div id="overlay" :class="{ show: sidebarShow }" @click="closeSidebar">
+        </div>
+
+        <div class="layout">
+
+            <!-- SIDEBAR -->
+            <div class="sidebar" :class="{ show: sidebarShow }">
+
+                <div>
+
+                    <h4>
+                        <i class="fas fa-cube"></i>
+                        SITTA
+                    </h4>
+
+                    <ul class="list-unstyled mt-3">
+
+                        <li class="active">
+                            <i class="fas fa-home"></i>
+                            Dashboard
+                        </li>
+
+                        <li>
+                            <a href="stok.html">
+                                <i class="fas fa-box"></i>
+                                Bahan Ajar
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="tracking.html">
+                                <i class="fas fa-truck"></i>
+                                Tracking
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- LOGOUT -->
+                <button class="btn btn-danger btn-sm w-100 logout-btn" @click="logout">
+
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+
+                </button>
+
+            </div>
+
+            <!-- MAIN -->
+            <div class="main">
+
+                <!-- HEADER -->
+                <div class="header mb-4">
+
+                    <div>
+
+                        <h3>
+                            <i class="fas fa-truck"></i>
+                            Tracking Delivery Order
+                        </h3>
+
+                        <p>
+                            {{ greeting }}, {{ user.nama }}
+                        </p>
+
+                    </div>
+
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
+
+                        <i class="fas fa-plus"></i>
+                        Tambah DO
+
+                    </button>
+
+                </div>
+
+                <!-- TABLE -->
+                <div class="card card-custom p-3">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered table-hover">
+
+                            <thead class="table-dark">
+
+                                <tr>
+
+                                    <th>No DO</th>
+                                    <th>NIM</th>
+                                    <th>Nama</th>
+                                    <th>Ekspedisi</th>
+                                    <th>Paket</th>
+                                    <th>Tanggal Kirim</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr v-for="(item,key) in tracking" :key="key">
+
+                                    <td>{{ key }}</td>
+
+                                    <td>{{ item.nim }}</td>
+
+                                    <td>{{ item.nama }}</td>
+
+                                    <td>{{ item.ekspedisi }}</td>
+
+                                    <td>{{ item.paket }}</td>
+
+                                    <td>{{ item.tanggalKirim }}</td>
+
+                                    <td>
+                                        Rp {{ item.total.toLocaleString() }}
+                                    </td>
+
+                                    <td>
+
+                                        <span class="badge bg-warning text-dark">
+
+                                            {{ item.status }}
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- MODAL -->
+        <div class="modal fade" id="modalTambah" tabindex="-1">
+
+            <div class="modal-dialog modal-lg">
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+
+                        <h5 class="modal-title">
+
+                            Tambah Delivery Order
+
+                        </h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        </button>
+
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="row g-3">
+
+                            <!-- NOMOR DO -->
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Nomor DO
+                                </label>
+
+                                <input type="text" class="form-control" :value="generateDO" readonly>
+
+                            </div>
+
+                            <!-- NIM -->
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    NIM
+                                </label>
+
+                                <input type="text" class="form-control" v-model="form.nim">
+
+                            </div>
+
+                            <!-- NAMA -->
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Nama
+                                </label>
+
+                                <input type="text" class="form-control" v-model="form.nama">
+
+                            </div>
+
+                            <!-- EKSPEDISI -->
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Ekspedisi
+                                </label>
+
+                                <select class="form-select" v-model="form.ekspedisi">
+
+                                    <option value="">
+                                        Pilih Ekspedisi
+                                    </option>
+
+                                    <option v-for="item in pengirimanList" :key="item.kode" :value="item.nama">
+
+                                        {{ item.nama }}
+
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- PAKET -->
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Paket Bahan Ajar
+                                </label>
+
+                                <select class="form-select" v-model="form.paket">
+
+                                    <option value="">
+                                        Pilih Paket
+                                    </option>
+
+                                    <option v-for="paket in paketList" :key="paket.kode" :value="paket.kode">
+
+                                        {{ paket.kode }} - {{ paket.nama }}
+
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- TANGGAL -->
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Tanggal Kirim
+                                </label>
+
+                                <input type="date" class="form-control" v-model="form.tanggalKirim">
+
+                            </div>
+
+                            <!-- DETAIL PAKET -->
+                            <div class="col-md-12" v-if="selectedPaket">
+
+                                <div class="alert alert-info">
+
+                                    <h6>
+                                        Isi Paket:
+                                    </h6>
+
+                                    <ul>
+
+                                        <li v-for="isi in selectedPaket.isi" :key="isi">
+
+                                            {{ isi }}
+
+                                        </li>
+
+                                    </ul>
+
+                                    <strong>
+
+                                        Total Harga:
+                                        Rp {{ selectedPaket.harga.toLocaleString() }}
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">
+
+                            Tutup
+
+                        </button>
+
+                        <button class="btn btn-primary" @click="tambahDO">
+
+                            Simpan
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="js/dataBahanAjar.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script src="js/tracking-app.js"></script>
+
+</body>
+
+</html>
