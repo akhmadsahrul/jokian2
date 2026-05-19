@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,58 +12,102 @@
   <!-- SweetAlert -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/index.css">
+
 </head>
+
 <body>
 
-<div class="login-container">
-  <form class="login-card" onsubmit="return login(event)">
-    
-    <h2>Member Login</h2>
+  <div class="login-wrapper">
 
-    <input type="email" id="email" placeholder="Email" required>
-    <input type="password" id="password" placeholder="Password" required>
+    <!-- LEFT: Illustration -->
+    <div class="left-panel">
+      <!-- Decorations -->
+      <div class="deco deco-1"></div>
+      <div class="deco deco-2"></div>
+      <div class="deco deco-3"></div>
+      <div class="deco deco-4"></div>
+      <div class="deco deco-5"></div>
 
-    <button type="submit">LOGIN</button>
-
-    <div class="links">
-      <a href="#" data-bs-toggle="modal" data-bs-target="#forgotModal">Lupa Password</a>
-      <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Daftar</a>
+      <div class="circle-bg">
+        <!-- Laptop SVG Illustration -->
+        <svg class="laptop-svg" viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Screen body -->
+          <rect x="20" y="10" width="160" height="110" rx="10" fill="#3d4a5c" />
+          <!-- Screen bezel -->
+          <rect x="30" y="20" width="140" height="90" rx="6" fill="#2c3a4a" />
+          <!-- Screen content (user icon) -->
+          <circle cx="100" cy="55" r="18" fill="none" stroke="#7e8c9a" stroke-width="3" />
+          <circle cx="100" cy="47" r="9" fill="#7e8c9a" />
+          <path d="M72 82 Q100 65 128 82" fill="#7e8c9a" />
+          <!-- Laptop base -->
+          <path d="M10 122 Q15 120 20 120 L180 120 Q185 120 190 122 L196 138 Q198 142 195 144 L5 144 Q2 142 4 138 Z"
+            fill="#3d4a5c" />
+          <!-- Hinge -->
+          <rect x="80" y="118" width="40" height="4" rx="2" fill="#2c3a4a" />
+        </svg>
+      </div>
     </div>
 
-  </form>
-</div>
+    <!-- RIGHT: Login Form -->
+    <div class="right-panel">
+      <h2>Member Login</h2>
 
-<!-- MODAL LUPA PASSWORD -->
-<div class="modal fade" id="forgotModal">
-  <div class="modal-dialog">
-    <div class="modal-content p-3">
-      <h5>Lupa Password</h5>
-      <input type="email" class="form-control mt-2" placeholder="Masukkan Email">
-      <button class="btn btn-primary mt-3">Kirim</button>
+      <form onsubmit="return login(event)">
+        <div class="input-group-custom"> <span class="icon"></span> <input type="email" id="email" placeholder="Email"
+            required> </div>
+        <div class="input-group-custom"> <span class="icon"></span> <input type="password" id="password"
+            placeholder="Password" required> </div> <button type="submit" class="btn-login">LOGIN</button>
+      </form>
+
+      <div class="links-row">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#forgotModal">Forgot Username / Password?</a>
+      </div>
+
+      <div class="create-account">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Create your Account →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL: Forgot Password -->
+  <div class="modal fade" id="forgotModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-4" style="border-radius:16px;">
+        <h5 class="mb-3" style="font-family:'Poppins',sans-serif;">Lupa Password</h5>
+        <input type="email" class="form-control" placeholder="Masukkan Email"
+          style="border-radius:50px;background:#f0f2f5;border:none;padding:12px 18px;">
+        <button class="btn btn-success mt-3"
+          style="border-radius:50px;background:#6ab04c;border:none;font-weight:700;">Kirim</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- MODAL DAFTAR -->
-<div class="modal fade" id="registerModal">
-  <div class="modal-dialog">
-    <div class="modal-content p-3">
-      <h5>Daftar Akun</h5>
-      <input type="text" class="form-control mt-2" placeholder="Nama">
-      <input type="email" class="form-control mt-2" placeholder="Email">
-      <input type="password" class="form-control mt-2" placeholder="Password">
-      <button class="btn btn-success mt-3">Daftar</button>
+  <!-- MODAL: Register -->
+  <div class="modal fade" id="registerModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-4" style="border-radius:16px;">
+        <h5 class="mb-3" style="font-family:'Poppins',sans-serif;">Daftar Akun</h5>
+        <input type="text" class="form-control mb-2" placeholder="Nama"
+          style="border-radius:50px;background:#f0f2f5;border:none;padding:12px 18px;">
+        <input type="email" class="form-control mb-2" placeholder="Email"
+          style="border-radius:50px;background:#f0f2f5;border:none;padding:12px 18px;">
+        <input type="password" class="form-control mb-2" placeholder="Password"
+          style="border-radius:50px;background:#f0f2f5;border:none;padding:12px 18px;">
+        <button class="btn btn-success mt-2"
+          style="border-radius:50px;background:#6ab04c;border:none;font-weight:700;">Daftar</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- JS -->
-<script src="js/datapengguna.js"></script>
-<script src="js/index.js"></script>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- JS -->
+  <script src="js/datapengguna.js"></script>
+  <script src="js/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

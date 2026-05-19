@@ -4,17 +4,35 @@ const app = Vue.createApp({
 
     return {
 
+      // ======================
+      // SIDEBAR
+      // ======================
+
       sidebarShow: false,
+
+      // ======================
+      // USER
+      // ======================
 
       greeting: "",
 
-      user: JSON.parse(localStorage.getItem("userLogin")) || {},
+      user: JSON.parse(
+        localStorage.getItem("userLogin")
+      ) || {},
+
+      // ======================
+      // DATA
+      // ======================
 
       tracking: dataTracking,
 
       paketList,
 
       pengirimanList,
+
+      // ======================
+      // FORM
+      // ======================
 
       form: {
 
@@ -34,6 +52,10 @@ const app = Vue.createApp({
 
   },
 
+  // ======================
+  // COMPUTED
+  // ======================
+
   computed: {
 
     // GENERATE NOMOR DO
@@ -41,9 +63,11 @@ const app = Vue.createApp({
 
       const tahun = new Date().getFullYear()
 
-      const jumlah = Object.keys(this.tracking).length + 1
+      const jumlah =
+        Object.keys(this.tracking).length + 1
 
-      const nomor = String(jumlah).padStart(3, "0")
+      const nomor =
+        String(jumlah).padStart(3, "0")
 
       return `DO${tahun}-${nomor}`
 
@@ -53,18 +77,26 @@ const app = Vue.createApp({
     selectedPaket() {
 
       return this.paketList.find(
+
         item => item.kode == this.form.paket
+
       )
 
     }
 
   },
 
+  // ======================
+  // METHODS
+  // ======================
+
   methods: {
 
+    // SIDEBAR
     toggleSidebar() {
 
-      this.sidebarShow = !this.sidebarShow
+      this.sidebarShow =
+        !this.sidebarShow
 
     },
 
@@ -74,14 +106,74 @@ const app = Vue.createApp({
 
     },
 
+    // LOGOUT
+    logout() {
+
+      Swal.fire({
+
+        title: "Yakin mau logout?",
+
+        text: "Anda akan keluar dari sistem",
+
+        icon: "warning",
+
+        showCancelButton: true,
+
+        confirmButtonColor: "#d33",
+
+        cancelButtonColor: "#6c757d",
+
+        confirmButtonText: "Ya, Logout",
+
+        cancelButtonText: "Batal"
+
+      }).then((result) => {
+
+        if (result.isConfirmed) {
+
+          localStorage.removeItem("userLogin")
+
+          Swal.fire({
+
+            title: "Berhasil!",
+
+            text: "Anda berhasil logout",
+
+            icon: "success",
+
+            timer: 1500,
+
+            showConfirmButton: false
+
+          })
+
+          setTimeout(() => {
+
+            window.location.href =
+              "index.html"
+
+          }, 1500)
+
+        }
+
+      })
+
+    },
+
+    // TAMBAH DO
     tambahDO() {
 
       // VALIDASI
       if (
+
         !this.form.nim ||
+
         !this.form.nama ||
+
         !this.form.ekspedisi ||
+
         !this.form.paket
+
       ) {
 
         alert("Data belum lengkap!")
@@ -90,7 +182,7 @@ const app = Vue.createApp({
 
       }
 
-      // SIMPAN DATA
+      // SIMPAN
       this.tracking[this.generateDO] = {
 
         nim: this.form.nim,
@@ -101,11 +193,13 @@ const app = Vue.createApp({
 
         ekspedisi: this.form.ekspedisi,
 
-        tanggalKirim: this.form.tanggalKirim,
+        tanggalKirim:
+          this.form.tanggalKirim,
 
         paket: this.form.paket,
 
-        total: this.selectedPaket.harga,
+        total:
+          this.selectedPaket.harga,
 
         perjalanan: []
 
@@ -129,9 +223,14 @@ const app = Vue.createApp({
       alert("Delivery Order berhasil ditambahkan!")
 
       // TUTUP MODAL
-      const modal = bootstrap.Modal.getInstance(
-        document.getElementById("modalTambah")
-      )
+      const modal =
+        bootstrap.Modal.getInstance(
+
+          document.getElementById(
+            "modalTambah"
+          )
+
+        )
 
       modal.hide()
 
@@ -139,31 +238,48 @@ const app = Vue.createApp({
 
   },
 
+  // ======================
+  // MOUNTED
+  // ======================
+
   mounted() {
 
+    // CEK LOGIN
+    if (!this.user.nama) {
+
+      window.location.href =
+        "index.html"
+
+    }
+
+    // GREETING
     let jam = new Date().getHours()
 
     if (jam >= 5 && jam < 12) {
 
-      this.greeting = "Selamat pagi"
+      this.greeting =
+        "Selamat pagi"
 
     }
 
     else if (jam >= 12 && jam < 15) {
 
-      this.greeting = "Selamat siang"
+      this.greeting =
+        "Selamat siang"
 
     }
 
     else if (jam >= 15 && jam < 18) {
 
-      this.greeting = "Selamat sore"
+      this.greeting =
+        "Selamat sore"
 
     }
 
     else {
 
-      this.greeting = "Selamat malam"
+      this.greeting =
+        "Selamat malam"
 
     }
 
